@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Coin Toss</title>
+  <style>
+    body {
+      background: #111;
+      color: #fff;
+      text-align: center;
+      font-family: 'Segoe UI', sans-serif;
+      padding-top: 50px;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+    }
+
+    .coin-container {
+      perspective: 1000px;
+      display: inline-block;
+      margin-top: 50px;
+    }
+
+    .coin {
+      width: 150px;
+      height: 150px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 3s;
+    }
+
+    .side {
+      width: 150px;
+      height: 150px;
+      position: absolute;
+      backface-visibility: hidden;
+      border-radius: 50%;
+      background-size: cover;
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+    }
+
+    .heads {
+      background-image: url('head.png');
+      transform: rotateY(0deg);
+    }
+
+    .tails {
+      background-image: url('tail.png');
+      transform: rotateY(180deg);
+    }
+
+    #result {
+      font-size: 2em;
+      margin-top: 30px;
+      color: #FFD700;
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 12px 30px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 10px;
+      background-color: #444;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Coin Toss</h1>
+
+  <div class="coin-container">
+    <div class="coin" id="coin">
+      <div class="side heads"></div>
+      <div class="side tails"></div>
+    </div>
+  </div>
+
+  <div id="result">Let's toss!</div>
+  <button onclick="tossCoin()">Toss Coin</button>
+
+  <script>
+    function tossCoin() {
+      const coin = document.getElementById("coin");
+      const result = Math.random() < 0.5 ? "Heads" : "Tails";
+
+      let angle = result === "Heads" ? 0 : 180;
+      let spins = Math.floor(Math.random() * 4 + 4); // Random full spins
+      let totalAngle = 360 * spins + angle;
+
+      coin.style.transform = `rotateY(${totalAngle}deg)`;
+
+      setTimeout(() => {
+        document.getElementById("result").textContent = result;
+      }, 3000);
+    }
+  </script>
+
+</body>
+</html>
